@@ -5,7 +5,7 @@ interface appPropsType {
 }
 
 function App({ children }: appPropsType) {
-    return <div className="App">{children}</div>;
+    return <div>{children}</div>;
 }
 
 export default App;
