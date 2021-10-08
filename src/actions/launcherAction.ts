@@ -1,6 +1,14 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { DispatchT, FAIL, LOADING, SUCCESS, SEARCH } from './launcherActionType';
+import {
+    DispatchT,
+    FAIL,
+    LAUNCH_STATUS,
+    LOADING,
+    SEARCH,
+    SUCCESS,
+    UPCOMING,
+} from './launcherActionType';
 
 const getLaunches = () => async (dispatch: Dispatch<DispatchT>) => {
     try {
@@ -20,6 +28,23 @@ export function getSearchedLaunches(searchFilter: string) {
         dispatch({
             type: SEARCH,
             payload: searchFilter,
+        });
+    };
+}
+
+export function isItUpcoming() {
+    return (dispatch: Dispatch<DispatchT>) => {
+        dispatch({
+            type: UPCOMING,
+        });
+    };
+}
+
+export function launchStatus(status: string) {
+    return (dispatch: Dispatch<DispatchT>) => {
+        dispatch({
+            type: LAUNCH_STATUS,
+            payload: status,
         });
     };
 }

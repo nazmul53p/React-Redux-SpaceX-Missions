@@ -1,5 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { DispatchT, FAIL, LaunchT, LOADING, SEARCH, SUCCESS } from '../actions/launcherActionType';
+import {
+    DispatchT,
+    FAIL,
+    LaunchT,
+    LAUNCH_STATUS,
+    LOADING,
+    SEARCH,
+    SUCCESS,
+    UPCOMING,
+} from '../actions/launcherActionType';
 
 export interface DefaultStatesI {
     loading: boolean;
@@ -17,6 +26,34 @@ const launcherReducer = (
     action: DispatchT
 ): DefaultStatesI => {
     switch (action.type) {
+        case SEARCH: {
+            state.launches = state.backupLaunches;
+            const filteredLaunches = state.launches?.filter(({ rocket }) => {
+                return rocket.rocket_name.toLowerCase() === action.payload.toLowerCase();
+            });
+            return {
+                ...state,
+                launches: filteredLaunches,
+            };
+        }
+        case UPCOMING: {
+            state.launches = state.backupLaunches;
+            const filteredLaunches = state.launches?.filter((launch) => launch.upcoming === true);
+            return {
+                ...state,
+                launches: filteredLaunches,
+            };
+        }
+        case LAUNCH_STATUS: {
+            state.launches = state.backupLaunches;
+            const filteredLaunches = state.launches?.filter(
+                (launch) => launch.launch_success === JSON.parse(action.payload)
+            );
+            return {
+                ...state,
+                launches: filteredLaunches,
+            };
+        }
         case FAIL:
             return {
                 loading: false,
@@ -34,16 +71,6 @@ const launcherReducer = (
                 launches: action.payload,
                 backupLaunches: action.payload,
             };
-        case SEARCH: {
-            state.launches = state.backupLaunches;
-            const filteredLaunches = state.launches?.filter(({ rocket }) => {
-                return rocket.rocket_name.toLowerCase() === action.payload.toLowerCase();
-            });
-            return {
-                ...state,
-                launches: filteredLaunches,
-            };
-        }
         default:
             return state;
     }

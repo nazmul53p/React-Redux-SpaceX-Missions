@@ -2,19 +2,33 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import getLaunches, { getSearchedLaunches } from '../actions/launcherAction';
+import getLaunches, {
+    getSearchedLaunches,
+    isItUpcoming,
+    launchStatus,
+} from '../actions/launcherAction';
 import { RootReducerT } from '../reducers/rootReducer';
 
 export default function Home() {
     const [name, getName] = useState('');
     const { launches } = useSelector((state: RootReducerT) => state.launches);
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getLaunches());
     }, [dispatch]);
+
     const onSearchByRocketName = () => {
         dispatch(getSearchedLaunches(name));
     };
+
+    const onUpcomingLaunches = () => {
+        dispatch(isItUpcoming());
+    };
+    const onLaunchStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(launchStatus(event.currentTarget.value));
+    };
+
     return (
         <div>
             <div className="bg-white shadow p-4 flex rounded-md my-6 mx-10">
@@ -39,31 +53,41 @@ export default function Home() {
                     type="button"
                     className="shadow border-gray-300 border-2 rounded-md  px-4 py-1 text-gray-500 hover:bg-gray-500 hover:text-white bg-gray-100"
                 >
-                    Default
+                    Last Week
                 </button>
                 <button
                     type="button"
                     className="shadow border-gray-300 border-2 rounded-md  px-4 py-1 text-gray-500 hover:bg-gray-500 hover:text-white bg-gray-100"
                 >
-                    Default
+                    Last Month
                 </button>
                 <button
                     type="button"
                     className="shadow border-gray-300 border-2 rounded-md  px-4 py-1 text-gray-500 hover:bg-gray-500 hover:text-white bg-gray-100"
                 >
-                    Default
+                    Last Year
                 </button>
-                <button
-                    type="button"
+                <select
+                    onChange={(event) => onLaunchStatus(event)}
                     className="shadow border-gray-300 border-2 rounded-md  px-4 py-1 text-gray-500 hover:bg-gray-500 hover:text-white bg-gray-100"
                 >
-                    Default
-                </button>
+                    <option value="" className="rounded-md" selected>
+                        Launch Status
+                    </option>
+                    <option value="false" className="rounded-md">
+                        Failure
+                    </option>
+                    <option value="true" className="rounded-md">
+                        Success
+                    </option>
+                </select>
+
                 <button
                     type="button"
+                    onClick={onUpcomingLaunches}
                     className="shadow border-gray-300 border-2 rounded-md  px-4 py-1 text-gray-500 hover:bg-gray-500 hover:text-white bg-gray-100"
                 >
-                    Default
+                    Upcoming Launch
                 </button>
             </div>
             <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">

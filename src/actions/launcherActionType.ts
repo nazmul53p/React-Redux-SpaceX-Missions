@@ -3,6 +3,8 @@ export const LOADING = 'LOADING';
 export const FAIL = 'FAIL';
 export const SUCCESS = 'SUCCESS';
 export const SEARCH = 'SEARCH';
+export const UPCOMING = 'UPCOMING';
+export const LAUNCH_STATUS = 'LAUNCH_STATUS';
 
 export type rocketT = {
     rocket_id: number;
@@ -39,5 +41,12 @@ export interface SuccessI {
     type: typeof SUCCESS;
     payload: LaunchT[];
 }
+export interface UpcomingI {
+    type: typeof UPCOMING;
+}
+export interface LaunchStatusI {
+    type: typeof LAUNCH_STATUS;
+    payload: string;
+}
 
-export type DispatchT = LoadingI | FailI | SuccessI | SearchI;
+export type DispatchT = LoadingI | FailI | SuccessI | SearchI | UpcomingI | LaunchStatusI;
