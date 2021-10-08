@@ -2,6 +2,7 @@
 export const LOADING = 'LOADING';
 export const FAIL = 'FAIL';
 export const SUCCESS = 'SUCCESS';
+export const SEARCH = 'SEARCH';
 
 export type rocketT = {
     rocket_id: number;
@@ -29,10 +30,14 @@ export interface LoadingI {
 export interface FailI {
     type: typeof FAIL;
 }
+export interface SearchI {
+    type: typeof SEARCH;
+    payload: string;
+}
 
 export interface SuccessI {
     type: typeof SUCCESS;
     payload: LaunchT[];
 }
 
-export type DispatchT = LoadingI | FailI | SuccessI;
+export type DispatchT = LoadingI | FailI | SuccessI | SearchI;

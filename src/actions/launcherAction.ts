@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { DispatchT, FAIL, LOADING, SUCCESS } from './launcherActionType';
+import { DispatchT, FAIL, LOADING, SUCCESS, SEARCH } from './launcherActionType';
 
 const getLaunches = () => async (dispatch: Dispatch<DispatchT>) => {
     try {
@@ -14,4 +14,13 @@ const getLaunches = () => async (dispatch: Dispatch<DispatchT>) => {
         dispatch({ type: FAIL });
     }
 };
+
+export function getSearchedLaunches(searchFilter: string) {
+    return (dispatch: Dispatch<DispatchT>) => {
+        dispatch({
+            type: SEARCH,
+            payload: searchFilter,
+        });
+    };
+}
 export default getLaunches;

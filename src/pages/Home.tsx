@@ -1,16 +1,20 @@
+/* eslint-disable react/no-array-index-key */
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import getLaunches from '../actions/launcherAction';
+import getLaunches, { getSearchedLaunches } from '../actions/launcherAction';
 import { RootReducerT } from '../reducers/rootReducer';
 
 export default function Home() {
+    const [name, getName] = useState('');
     const { launches } = useSelector((state: RootReducerT) => state.launches);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getLaunches());
     }, [dispatch]);
-
+    const onSearchByRocketName = () => {
+        dispatch(getSearchedLaunches(name));
+    };
     return (
         <div>
             <div className="bg-white shadow p-4 flex rounded-md my-6 mx-10">
@@ -18,9 +22,13 @@ export default function Home() {
                     className=" focus:outline-none w-full rounded p-1"
                     type="text"
                     placeholder="Search 'Rocket Name'"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        getName(event.target.value)
+                    }
                 />
                 <button
                     type="button"
+                    onClick={onSearchByRocketName}
                     className="bg-gray-300 hover:bg-gray-500 rounded text-white p-2 pl-4 pr-4"
                 >
                     <p className="font-semibold text-xs">Search</p>
@@ -60,9 +68,9 @@ export default function Home() {
             </div>
             <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
                 {launches &&
-                    launches?.map((launch) => (
+                    launches?.map((launch, indx) => (
                         <div
-                            key={launch.flight_number}
+                            key={launch.flight_number + indx}
                             className="rounded overflow-hidden shadow-lg"
                         >
                             <div className="px-6 py-4">
