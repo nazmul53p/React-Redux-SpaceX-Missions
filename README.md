@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center"><a href="https://github.com/learnwithsumit/uptime-monitoring-api-raw-node">Raw Node.js Project - Uptime Monitoring API</a></h3>
+  <h3 align="center"><a href="https://github.com/nazmul53p/React-Redux-SpaceX-Missions.git">React Redux Space Missions</a></h3>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -7,7 +7,6 @@
 
 - [How to run](#how-to-run)
   - [New Users](#new-users-who-never-cloned-this-repository-before)
-  - [Old Users](#old-users-who-previously-cloned-the-repository)
 - [Contact](#contact)
 
 <!-- HOW TO RUN -->
