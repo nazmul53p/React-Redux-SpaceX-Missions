@@ -38,6 +38,10 @@ Please follow the below instructions to run this project in your machine:
    ```sh
    npm start
    ```
+   or
+   ```sh
+   yarn start
+   ```
 5. Your app should be available in http://localhost:3000
 
 <!-- CONTACT -->
