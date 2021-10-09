@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import {
     DispatchT,
     FAIL,
+    LAST_YEAR,
     LAUNCH_STATUS,
     LOADING,
     SEARCH,
@@ -46,6 +47,22 @@ export function launchStatus(status: string) {
             type: LAUNCH_STATUS,
             payload: status,
         });
+    };
+}
+export function lastYear(year: number) {
+    return async (dispatch: Dispatch<DispatchT>) => {
+        try {
+            dispatch({ type: LOADING });
+            const res = await axios.get(
+                `https://api.spacexdata.com/v3/launches?launch_year=${year}`
+            );
+            dispatch({
+                type: LAST_YEAR,
+                payload: res.data,
+            });
+        } catch (e) {
+            dispatch({ type: FAIL });
+        }
     };
 }
 export default getLaunches;

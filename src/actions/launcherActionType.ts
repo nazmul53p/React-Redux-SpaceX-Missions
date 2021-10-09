@@ -5,6 +5,7 @@ export const SUCCESS = 'SUCCESS';
 export const SEARCH = 'SEARCH';
 export const UPCOMING = 'UPCOMING';
 export const LAUNCH_STATUS = 'LAUNCH_STATUS';
+export const LAST_YEAR = 'LAST_YEAR';
 
 export type rocketT = {
     rocket_id: number;
@@ -48,5 +49,16 @@ export interface LaunchStatusI {
     type: typeof LAUNCH_STATUS;
     payload: string;
 }
+export interface LastYearI {
+    type: typeof LAST_YEAR;
+    payload: LaunchT[];
+}
 
-export type DispatchT = LoadingI | FailI | SuccessI | SearchI | UpcomingI | LaunchStatusI;
+export type DispatchT =
+    | LoadingI
+    | FailI
+    | SuccessI
+    | SearchI
+    | UpcomingI
+    | LaunchStatusI
+    | LastYearI;

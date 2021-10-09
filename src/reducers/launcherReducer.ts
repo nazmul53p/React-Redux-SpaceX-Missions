@@ -2,6 +2,7 @@
 import {
     DispatchT,
     FAIL,
+    LAST_YEAR,
     LaunchT,
     LAUNCH_STATUS,
     LOADING,
@@ -44,15 +45,30 @@ const launcherReducer = (
                 launches: filteredLaunches,
             };
         }
-        case LAUNCH_STATUS: {
-            state.launches = state.backupLaunches;
-            const filteredLaunches = state.launches?.filter(
-                (launch) => launch.launch_success === JSON.parse(action.payload)
-            );
+        case LAST_YEAR: {
             return {
                 ...state,
-                launches: filteredLaunches,
+                loading: false,
+                launches: action.payload,
+                backupLaunches: action.payload,
             };
+        }
+        case LAUNCH_STATUS: {
+            state.launches = state.backupLaunches;
+            try {
+                const filteredLaunches = state.launches?.filter(
+                    (launch) => launch.launch_success === JSON.parse(action.payload)
+                );
+                return {
+                    ...state,
+                    launches: filteredLaunches,
+                };
+            } catch (e) {
+                return {
+                    ...state,
+                    launches: [],
+                };
+            }
         }
         case FAIL:
             return {
